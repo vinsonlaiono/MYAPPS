@@ -1,0 +1,49 @@
+<h1>Seach for Jobs by location</h1>
+
+<div class="search_bar">
+  <form (submit)="getAllJobs()">
+    <input type="text" class="form-control col-5 my-2 p-4 d-inline mr-1" placeholder="Filter by title, benefits, company, expertise" name="searchOptions.description" [(ngModel)]='searchOptions.description'>
+    <input type="text" class="form-control col-4 my-2 p-4 d-inline mr-1" placeholder="Filter by city, state, zip code, country" name="searchOptions.location" [(ngModel)]='searchOptions.location'>
+    <div class="form-check d-inline">
+      <label class="form-check-label" for="full-time">Full Time</label>
+      <input type="checkbox" class="form-check-input" id="full-time" name="searchOptions.full_time" [(ngModel)]='searchOptions.full_time'>
+      </div>
+    <input type="submit" class="btn btn-info d-inline ml-4" >
+  </form>
+</div>
+
+<div id="accordion">
+  <div *ngFor="let job of jobs">
+    <div class="card">
+
+      <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <h5 class="card-title text-truncate col-11"><img src="{{ job.company_logo }}" alt="" style="width: 50px"> {{ job.title }} -  {{ job.company }}</h5>
+          </button>
+        </h5>
+      </div>
+      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body ">
+          <div class="row">
+            <div class="col-10">
+              <h5 class="text-muted">{{ job.location }}</h5>
+              <p class="card-text col" [innerHTML]="job.description"></p>
+              <p [innerHTML]="job.how_to_apply"></p>
+            </div>
+            
+            <div class="col-2 text-right">
+              <button (click)="addToMyApps(job)" class="btn btn-info">Add to list of Apps</button>
+            </div>
+            
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          Date Posted: {{ job.created_at }}
+        </div>
+      </div>
+    </div>
+</div>
+
+</div>
+<a href='https://www.glassdoor.com/index.html'>powered by <img src='https://www.glassdoor.com/static/img/api/glassdoor_logo_80.png' title='Job Search' /></a>

@@ -1,0 +1,18 @@
+<nav class="navbar bg-white">
+  <div class="container col-9">
+    <a class="display-4 text-decoration-none text-reset text-dark" href="#">
+      M Y A P P S 
+    </a>
+    <a (click)="showLogin()" *ngIf="home==true"  class="text-right btn btn-dark text-white">Login | Signup</a>
+    <a *ngIf="home == false;"  class="text-right btn btn-dark text-white">Logout</a>
+    <a href="https://github.com/login/oauth/authorize?client_id=a303fa5e19523e6c9c0b">Sing in with GitHub</a>
+  </div>
+</nav>
+
+  <!-- <app-home *ngIf="home==true;"></app-home> -->
+  <app-login *ngIf="login==true && home == false;" (userHasLoggedIn)=dataFromLogin($event)></app-login>
+
+
+<router-outlet></router-outlet>
+
+<app-footer></app-footer>

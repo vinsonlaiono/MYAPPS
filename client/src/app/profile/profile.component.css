@@ -1,0 +1,16 @@
+.profile-pic{
+    height: 10rem;
+    width: 10rem;
+    background-color:rgb(193, 186, 186);
+    border-radius: 100%
+}
+.profile-pic, .profile-info{
+    display:inline-block;
+    vertical-align: top;
+}
+.profile-info{
+    padding: 30px;
+}
+#profile-name{
+    font-size: x-large;
+}

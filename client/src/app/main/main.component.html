@@ -1,0 +1,21 @@
+<div class="container mt-2 col-8">
+  <ul class="nav border p-3 bg-white justify-content-end">
+    <li class="nav-item">
+      <a class="nav-link active text-dark link-nav" [routerLink]="['/apps', 'profile']">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark link-nav" [routerLink]="['/apps', 'jobs']">Jobs</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark link-nav disabled" href="#" tabindex="-1" aria-disabled="true">Stats</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark link-nav" [routerLink]="['/apps', 'settings']">Settings</a>
+    </li>
+  </ul>
+
+  <router-outlet></router-outlet>
+  <!-- <app-profile></app-profile> -->
+
+
+</div>
