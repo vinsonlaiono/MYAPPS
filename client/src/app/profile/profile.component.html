@@ -1,7 +1,7 @@
 <div class="profile-header" class="border bg-white mb-2 p-4">
-    <div class="profile-pic"></div>
+    <img class="profile-pic" [src]="user.avatar_url" alt="">
     <div class="profile-info">
-      <div id="profile-name" class="p">Vinson Aiono</div>
+      <div id="profile-name" class="p">{{ user.name }}</div>
       <div class="p">Location: Fremont California</div>
       <div class="p">Job TItle: Software Development Engineer</div>
     </div>

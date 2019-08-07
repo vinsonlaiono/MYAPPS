@@ -36,7 +36,12 @@ export class HttpService {
       return this._http.get(`${jobsApiUrl}`, {headers:headers})
   }
 
-  githubLogIn(){
-    return this._http.get("https://github.com/login/oauth/authorize?client_id=a303fa5e19523e6c9c0b");
+  githubLogIn(oauthToken){
+    let headers = {
+      headers : {
+        'Authorization' : `token ${oauthToken}`
+      }
+    }
+    return this._http.get("https://api.github.com/user", headers);
   }
 }
