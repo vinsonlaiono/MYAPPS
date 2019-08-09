@@ -9,7 +9,10 @@ import { HttpService } from '../http.service';
 })
 export class ProfileComponent implements OnInit {
   access_token:String;
-  user: Object;
+  user: Object = {
+    name:"",
+    avatar_url: ""
+  };
   constructor(
     private _httpService : HttpService,
     private _route: ActivatedRoute,
