@@ -14,6 +14,8 @@ export class AppComponent {
   login : Boolean = false;
   loggedIn : Boolean = false;
 
+  isAuthenticated = true;
+
   constructor(
     private _httpService : HttpService, 
     private _router: Router

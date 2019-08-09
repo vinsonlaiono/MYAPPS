@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { HttpService } from './http.service';
+import { OAuthService } from './o-auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -33,7 +34,10 @@ import { JobsComponent } from './jobs/jobs.component';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [HttpService],
+  providers: [
+    HttpService,
+    OAuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
