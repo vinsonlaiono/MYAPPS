@@ -7,10 +7,8 @@ const MonUser = require('../../controllers/mongoose-api/users')
 // GET ALL USERS
 // -----------------------------------
 module.exports = function(app){
-    app.get('/signin/github/oauth', (req, res) => {
+    app.get('/signin/github/oauth', (req, res) => {   // GITHUB Oauth
       oauth.authenticate(req, res);
-      // console.log("Need to redirect:")
-      // res.redirect('/home')
     })
     
     // SEQUELIZE API CALLS

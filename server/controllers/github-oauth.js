@@ -1,6 +1,7 @@
 const axios = require('axios')
-const client_id = 'a303fa5e19523e6c9c0b'
-const client_secret = '0682cb5e68c2836d7a25f96d51676c1777d58aba'
+const ENV = require('../config/env')
+const client_id = ENV.client_id
+const client_secret = ENV.secret
 
 module.exports = {
     'authenticate' : function(req, res){
@@ -33,7 +34,6 @@ module.exports = {
             console.log("ACCESS TOKEN FOR USER: " + response.data['access_token'])
             const access_token = response.data.access_token;
             res.redirect('/apps/profile/'+access_token)
-        
         })
         .catch(err => {
             console.log(err)
