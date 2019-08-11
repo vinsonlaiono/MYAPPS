@@ -6,6 +6,7 @@ import { MainComponent } from './main/main.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingsComponent } from './settings/settings.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
   { path: 'home' , component : HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
     { path: 'profile/:acc_token', component : ProfileComponent }, 
     { path: 'settings', component : SettingsComponent },
     { path: 'jobs', component : JobsComponent },
+    { path: 'stats', component: StatsComponent },
   ]},
   { path: '', pathMatch: 'full', redirectTo: '/home' },
 ];

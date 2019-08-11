@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from '../http.service';
+import { DefaultUrlHandlingStrategy } from '@angular/router/src/url_handling_strategy';
 
 @Component({
   selector: 'app-profile',
@@ -31,6 +32,13 @@ export class ProfileComponent implements OnInit {
     this._httpService.githubLogIn(this.access_token).subscribe(data => {
       console.log("Data back from oath", data);
       this.user = data;
+      this.createUser(this.user);
+    })
+  }
+
+  createUser(user){
+    this._httpService.newUser(user, this.access_token).subscribe( data => {
+      console.log(data)
     })
   }
 

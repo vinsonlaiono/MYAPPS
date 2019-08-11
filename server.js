@@ -3,10 +3,19 @@
 const express = require('express'),
       app = express(),
       bodyParser = require('body-parser'),
+      session = require('express-session'),
       port = process.env.PORT || 8000;
+    
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: process.env.SECRET || 'durantula',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 60000 }
+}))
 
 app.use(bodyParser.json());
-app.listen(port, () => console.log(`Listening on port: ${port}`));
+app.listen(port, () => console.log(`Working in ${process.env.NODE_ENV} Listening on port: ${port}`));
 app.use(express.static(__dirname + '/client/dist/client'));
 
 app.use(function(req, res, next) {

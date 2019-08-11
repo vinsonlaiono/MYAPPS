@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev_start": "nodemon server.js"
+    "dev_start": "PORT=8001 NODE_ENV=development nodemon server.js",
+    "prod_start": "PORT=8000 NODE_ENV=production nodemon server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "font-awesome": "^4.7.0",
     "mongoose": "^5.6.8",
     "mysql2": "^1.6.5",

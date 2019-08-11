@@ -33,7 +33,8 @@ module.exports = {
         .then((response) => {
             console.log("ACCESS TOKEN FOR USER: " + response.data['access_token'])
             const access_token = response.data.access_token;
-            res.redirect('/apps/profile/'+access_token)
+            res.redirect('/apps/profile/'+access_token)     // this redirects to profilepage with access token
+            // res.redirect('/api/mon/users/'+access_token);   // redirect to reoute to create a user
         })
         .catch(err => {
             console.log(err)

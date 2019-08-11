@@ -1,5 +1,6 @@
 const User = require('../../models/mongoose')
 
+
 module.exports = {
     'getAllUsers' : function(req, res){
         User.findAll()
@@ -12,26 +13,14 @@ module.exports = {
             res.json({err})
         })
     },
-    'createNewUser' : function(req, res){
-        user = new User()
-        user.first_name = req.body['first_name']
-        user.last_name = req.body['last_name']
-        user.email = req.body['email']
-        user.password = req.body['password']
-    
-        user.save()
-        .then( user => {
-            res.json({ 
-                "message": "successfully created a new User", 
-                "user" : user 
-            })
+    'createNewUser' : function(req, res){               // Create a new user in the mongodb create session data
+        acc_token = req.params.acc_token;
+        console.log(`Access_token: ${acc_token}`);        
+        console.log(`Post data for user: ${req.body}`);        
+        
+        res.json({
+            'message': 'Creating a new user:'
         })
-        .catch( err => {
-            console.log("error")
-            res.json({ 
-                "message": "failed to created a new User", 
-                "err" : err 
-            })
-        })
+        
     }
 }

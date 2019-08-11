@@ -16,6 +16,7 @@ import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileComponent } from './profile/profile.component';
 import { JobsComponent } from './jobs/jobs.component';
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { JobsComponent } from './jobs/jobs.component';
     MainComponent,
     SettingsComponent,
     ProfileComponent,
-    JobsComponent
+    JobsComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,

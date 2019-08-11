@@ -23,7 +23,7 @@ module.exports = function(app){
     app.get('/api/seq/users', (req, res) => {
         SeqUser.getAllUsers(req, res);
     })
-    app.post('/api/mon/users', (req, res) => {
+    app.post('/api/mon/users/:acc_token', (req, res) => {
       MonUser.createNewUser(req, res);
     })
     

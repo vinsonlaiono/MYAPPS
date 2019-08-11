@@ -44,4 +44,7 @@ export class HttpService {
     }
     return this._http.get("https://api.github.com/user", headers);
   }
+  newUser(user: Object, acc_token: String){
+    return this._http.post(`/api/mon/users/${acc_token}`, user);
+  }
 }
