@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { HttpService } from '../http.service';
-import { DefaultUrlHandlingStrategy } from '@angular/router/src/url_handling_strategy';
 
 @Component({
   selector: 'app-profile',
@@ -9,11 +8,12 @@ import { DefaultUrlHandlingStrategy } from '@angular/router/src/url_handling_str
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  access_token:String;
+  uid:String;
   user: Object = {
     name:"",
     avatar_url: ""
   };
+  @Output() userHasLoggedIn = new EventEmitter
   constructor(
     private _httpService : HttpService,
     private _route: ActivatedRoute,
@@ -22,24 +22,21 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
-      console.log("Users Access Token", params['acc_token'])
-      this.access_token = params['acc_token'];
+      console.log("Users Access Token", params['uid'])
+      this.uid = params['uid'];
   });
     this.getUserInfo();
   }
 
   getUserInfo(){
-    this._httpService.githubLogIn(this.access_token).subscribe(data => {
+    this._httpService.githubLogIn(this.uid).subscribe(data => {
       console.log("Data back from oath", data);
-      this.user = data;
-      this.createUser(this.user);
+      this.user = data['user'];
+      this.userHasLoggedIn.emit(true);
+      
     })
   }
 
-  createUser(user){
-    this._httpService.newUser(user, this.access_token).subscribe( data => {
-      console.log(data)
-    })
-  }
+  
 
 }

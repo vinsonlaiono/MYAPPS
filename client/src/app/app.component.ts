@@ -12,7 +12,7 @@ export class AppComponent {
   title : String = 'client';
   home : Boolean = true;
   login : Boolean = false;
-  loggedIn : Boolean = false;
+  authenticated : Boolean = false;
 
   isAuthenticated = true;
 
@@ -22,13 +22,14 @@ export class AppComponent {
     ){}
 
   dataFromLogin(eventData){
-    this.loggedIn = eventData;
-    this.home = false;
-    this.login = false;
+    console.log(eventData, "THis is the event data from the other app")
+    this.authenticated = eventData;
+    // this.home = false;
+    // this.login = false;
     this._router.navigate(['apps', 'profile']);
   }
-  showLogin(){
-    this.home = false;
-    this.login = true;
-  }
+  // showLogin(){
+  //   this.home = false;
+  //   this.login = true;
+  // }
 }

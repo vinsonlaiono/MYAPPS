@@ -9,11 +9,11 @@ var JobSchema = new mongoose.Schema({
 })
 
 var UserSchema = new mongoose.Schema({
-    full_name: { type: String, required: [true, 'Task title length must be greater than 2'], minlength: 2 },
+    full_name: { type: String, required: [true, 'Task title length must be greater than 2'], minlength: 2, unique: true },
     avatar_url : {type: String},
     location : { type: String},
     job_title: { type :  String },
-    email: { type: String, required: true },
+    email: { type: String },
     access_token: { type: String, required: true },
     jobs: [JobSchema]
 }, { timestamps: true });

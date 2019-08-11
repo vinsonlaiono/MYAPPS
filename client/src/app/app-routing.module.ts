@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'home' , component : HomeComponent },
   { path: 'login' , component : LoginComponent },
   { path: 'apps' , component : MainComponent, children: [
-    { path: 'profile/:acc_token', component : ProfileComponent }, 
+    { path: 'profile/:uid', component : ProfileComponent }, 
     { path: 'settings', component : SettingsComponent },
     { path: 'jobs', component : JobsComponent },
     { path: 'stats', component: StatsComponent },

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev_start": "PORT=8001 NODE_ENV=development nodemon server.js",
-    "prod_start": "PORT=8000 NODE_ENV=production nodemon server.js"
+    "dev_start": "PORT=8000 NODE_ENV=development nodemon server.js",
+    "prod_start": "PORT=8001 NODE_ENV=production nodemon server.js"
   },
   "keywords": [],
   "author": "",
