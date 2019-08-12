@@ -4,12 +4,13 @@ const express = require('express'),
       app = express(),
       bodyParser = require('body-parser'),
       session = require('express-session'),
+      
       port = process.env.PORT || 8000;
     
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
   secret: process.env.SECRET || 'durantula',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }))

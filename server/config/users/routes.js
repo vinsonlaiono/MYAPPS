@@ -30,6 +30,9 @@ module.exports = function(app){
     app.get('/api/mon/users/:id', (req, res) => {
       MonUser.getOneUser(req, res);
     })
+    app.delete('/api/mon/users/:id', (req, res) => {
+      MonUser.deletOneUser(req, res);
+    })
     app.post('/api/mon/users/:acc_token', (req, res) => {
       MonUser.createNewUser(req, res);
     })

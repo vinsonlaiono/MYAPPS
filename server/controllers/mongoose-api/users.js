@@ -25,6 +25,13 @@ module.exports = {
             }
         })
     },
+    'deletOneUser' : function(req, res){
+        User.deleteOne({id: req.params.id}, (err, user) => {
+            console.log(err)
+            console.log(user)
+            res.json({"message": "Success", 'user':user})
+        })
+    },
     'createNewUser' : function(req, res){               // Create a new user in the mongodb create session data
 
         if(req.session.user_id){

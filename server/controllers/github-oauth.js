@@ -1,5 +1,6 @@
 const axios = require('axios')
 const ENV = require('../config/env')
+const jwt = require('jsonwebtoken')
 
 const mongoose = require('mongoose')
 const User = mongoose.model('User');
@@ -60,6 +61,9 @@ module.exports = {
                 req.session.user_id = newUser._id;
                 console.log("Session ID of the current user logged in: ", req.session.user_id)
                 console.log("NewUser created: ", newUser);
+
+                jwt.sign({newUser}, 'secreykey', )
+
                 res.redirect(`/apps/profile/${newUser._id}`);   // redirect to reoute to create a user
             })
             .catch( err => {
