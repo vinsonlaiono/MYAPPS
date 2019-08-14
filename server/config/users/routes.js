@@ -2,6 +2,8 @@ const path = require('path');
 const SeqUser = require('../../controllers/users')
 const oauth = require('../../controllers/github-oauth')
 const MonUser = require('../../controllers/mongoose-api/users')
+const passport = require('passport');
+
 
 // -----------------------------------
 // GET ALL USERS
@@ -14,6 +16,9 @@ module.exports = function(app){
     app.get('/authenticate/user', (req, res) => {
       oauth.authenticateUser(req, res);
     });
+    app.get('/secret', passport.authenticate('jwt', { session: false }), (req, res) => {
+      oauth.secret(req, res);
+    })
     
     // SEQUELIZE API CALLS
     // app.get('/api/seq/users', (req, res) => {

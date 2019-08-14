@@ -4,6 +4,8 @@ const express = require('express'),
       app = express(),
       bodyParser = require('body-parser'),
       session = require('express-session'),
+      passport = require('passport'),
+      jwt = require('jsonwebtoken');
       
       port = process.env.PORT || 8000;
     
@@ -15,6 +17,8 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.json());
 app.listen(port, () => console.log(`Working in ${process.env.NODE_ENV} Listening on port: ${port}`));
 app.use(express.static(__dirname + '/client/dist/client'));

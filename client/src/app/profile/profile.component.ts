@@ -9,6 +9,8 @@ import { HttpService } from '../http.service';
 })
 export class ProfileComponent implements OnInit {
   uid:String;
+
+  jwt_tok:String;
   user: Object = {
     name:"",
     avatar_url: ""
@@ -22,8 +24,11 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
-      console.log("Users Access Token", params['uid'])
+      console.log("Users db uid: ", params['uid'])
+      console.log("Users db tid: ", params['tid'])
       this.uid = params['uid'];
+      this.jwt_tok = params['tui'];
+      
   });
     this.getUserInfo();
   }

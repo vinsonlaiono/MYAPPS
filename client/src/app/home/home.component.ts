@@ -16,15 +16,15 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.oauth.authenticate().subscribe( data => {
-      let authenticated = data['message'] === "Success" ? true : false;
-      if(authenticated){
-        // this._router.navigate(`/apps/profile/${data.user._id}`)
-        this._router.navigate(['apps', 'profile', data['user']._id]);
-      } else {
-        console.log("please signin")
-      }
-    });
+    // this.oauth.authenticate().subscribe( data => {
+    //   let authenticated = data['message'] === "Success" ? true : false;
+    //   if(authenticated){
+    //     // this._router.navigate(`/apps/profile/${data.user._id}`)
+    //     this._router.navigate(['apps', 'profile', data['user']._id]);
+    //   } else {
+    //     console.log("please signin")
+    //   }
+    // });
   }
 
 }

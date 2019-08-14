@@ -1,16 +1,40 @@
 const axios = require('axios')
 const ENV = require('../config/env')
-const jwt = require('jsonwebtoken')
 
-const mongoose = require('mongoose')
-const User = mongoose.model('User');
+
+const mongoose = require('mongoose'),
+      User = mongoose.model('User'),
+      passport = require('passport'),
+      jwt = require('jsonwebtoken');
+      url = require('url')
 
 const client_id = ENV.client_id
 const client_secret = ENV.secret
 
+// PASSPORT MIDDLEWARE
+
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+
+let opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = "durantula";
+passport.use(new JwtStrategy(opts, (jwt_payload, next) => {
+    User.findOne({id: jwt_payload._id}, (err, user) => {
+        if (err) {
+            return next(err, false);
+        }
+        if (user) {
+            return next(null, user);
+        } else {
+            return next(null, false);
+        }
+    })
+}))
+
 module.exports = {
     'authenticate' : function(req, res){
-        console.log("******************************************************************************************************************");
+        console.log("*****************************************************************************************************************");
 
         console.log("Request Object from Github OATH: ", req.url);
         console.log("Request Object from Github OATH: ", req.url);
@@ -49,22 +73,33 @@ module.exports = {
             })
             .then( user => {
                 // create user in database
-                console.log("Creating a new user", user.data)
+                console.log("Creating a new user", user.data);
 
                 let newUser = new User();
                 newUser.full_name = user.data.name;
                 newUser.avatar_url = user.data.avatar_url;
                 newUser.access_token = access_token;
                 newUser.save()
-                .then(user=> console.log(user))
+                .then(user=> {
+                    console.log("Session ID of the current user logged in: ", req.session.user_id)
+                    console.log("NewUser created: ", newUser);
+                    var payload = { id: user.id };
+                    var token = jwt.sign(payload, opts.secretOrKey, { expiresIn: 604800 });
+                    req.session.user_id = newUser._id;
+                    req.session.jwt_token = token;
+                    console.log({ 
+                        "Message": "Successfully created a new Account", 
+                        "User": user, 
+                        "token": token  
+                    });
+
+                    // res.redirect(`/apps/profile/${newUser._id}`);   // redirect to reoute to create a user
+                    res.redirect(`/apps/profile/${newUser._id}/${token}`);   // redirect to reoute to create a user
+                })
                 .catch(err=> console.log(err))
-                req.session.user_id = newUser._id;
-                console.log("Session ID of the current user logged in: ", req.session.user_id)
-                console.log("NewUser created: ", newUser);
 
-                jwt.sign({newUser}, 'secreykey', )
+                
 
-                res.redirect(`/apps/profile/${newUser._id}`);   // redirect to reoute to create a user
             })
             .catch( err => {
                 //something went wrong with get user data
@@ -89,5 +124,13 @@ module.exports = {
         } else {
             res.json({ 'message' : 'Error', 'err' : 'No User has been Authenticated'})
         }
+    }, 
+    'secret' : function(req, res){
+        res.json({
+            Authorized: true,
+            Status: "Token Successfully used",
+            message: "Success! You can not see this without a token"
+        });
     }
+
 }
