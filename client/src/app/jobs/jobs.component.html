@@ -16,14 +16,14 @@
   <div *ngFor="let job of jobs">
     <div class="card">
 
-      <div class="card-header" id="headingOne">
+      <div class="card-header" id="job.id">
         <h5 class="mb-0">
           <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             <h5 class="card-title text-truncate col-11"><img src="{{ job.company_logo }}" alt="" style="width: 50px"> {{ job.title }} -  {{ job.company }}</h5>
           </button>
         </h5>
       </div>
-      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div id="collapseOne" class="collapse show" aria-labelledby="job.id" data-parent="#accordion">
         <div class="card-body ">
           <div class="row">
             <div class="col-10">

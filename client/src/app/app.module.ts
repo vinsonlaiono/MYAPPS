@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { HttpService } from './http.service';
 import { OAuthService } from './o-auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -38,7 +38,12 @@ import { StatsComponent } from './stats/stats.component';
   ],
   providers: [
     HttpService,
-    OAuthService
+    OAuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: OAuthService,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

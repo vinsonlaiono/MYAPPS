@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from '../o-auth.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-
+import { paths } from '../const'; 
+ 
 
 @Component({
   selector: 'app-main',
@@ -10,12 +11,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-  user_id:String;
-  jwt_token:String;
+  private user_id:String;
+  private jwt_token:String;
 
   constructor(
     private oAuth: OAuthService,
-    private _router: ActivatedRoute
+    private _router: ActivatedRoute,
+    private _route: Router
   ) { }
 
   ngOnInit() {
@@ -27,7 +29,10 @@ export class MainComponent implements OnInit {
     console.log("User jwt: ", access[6])
     this.user_id = access[5];
     this.jwt_token = access[6];
-    
+    if(!paths.inSession){
+      this.auth();
+    }
+    this.auth();
   }
 
   auth(){
@@ -39,8 +44,10 @@ export class MainComponent implements OnInit {
     this.oAuth.authenticate(payLoad).subscribe( data => {
       console.group()
       console.log("data back from authentication:", data);
+      this._route.navigate(['apps', 'profile', this.user_id, this.jwt_token]);
 
     }, err => {
+      console.log("there was an error while making API CALL");
       console.log(err);
     });
   }

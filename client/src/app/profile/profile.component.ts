@@ -24,11 +24,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._route.params.subscribe((params: Params) => {
-      console.log("Users db uid: ", params['uid'])
-      console.log("Users db tid: ", params['tid'])
+      console.log("Users uid: ", params['uid'])
+      console.log("Token tid: ", params['tid'])
       this.uid = params['uid'];
       this.jwt_tok = params['tui'];
-      
   });
     this.getUserInfo();
   }

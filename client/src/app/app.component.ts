@@ -9,7 +9,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title : String = 'client';
   home : Boolean = true;
   login : Boolean = false;
   authenticated : Boolean = false;
