@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpService } from './http.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { paths } from './const';
 
 
 @Component({
@@ -9,20 +10,22 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  home : Boolean = true;
-  login : Boolean = false;
-  authenticated : Boolean = false;
+  // home : Boolean = true;
+  // login : Boolean = false;
+  // authenticated : Boolean = false;
 
-  isAuthenticated = true;
+  // isAuthenticated = true;
 
   constructor(
     private _httpService : HttpService, 
     private _router: Router
-    ){}
+    ){
+      console.log("This paths in app.component: ",paths)
+    }
 
   dataFromLogin(eventData){
     console.log(eventData, "THis is the event data from the other app")
-    this.authenticated = eventData;
+    // this.authenticated = eventData;
     // this.home = false;
     // this.login = false;
     this._router.navigate(['apps', 'profile']);

@@ -97,9 +97,6 @@ module.exports = {
                     res.redirect(`/apps/profile/${newUser._id}/${token}`);   // redirect to reoute to create a user
                 })
                 .catch(err=> console.log(err))
-
-                
-
             })
             .catch( err => {
                 //something went wrong with get user data
@@ -132,21 +129,92 @@ module.exports = {
             Status: "Token Successfully used",
             message: "Success! You can not see this without a token"
         });
-        // if(!req.headers.authorization) {
-        //     return res.status(401).send('Unauthorized request')
-        // }
-        // let token = req.headers.authorization.split(' ')[1]
-        // if(token === 'null') {
-        //     return res.status(401).send('Unauthorized request')    
-        // }
-        // let payload = jwt.verify(token, 'secretKey')
-        // if(!payload) {
-        //     return res.status(401).send('Unauthorized request')    
-        // }
-        // req.userId = payload.subject
-        // next();
-        
-        
+    },
+    'newAuthenticate': function(req, res) {
+        console.log("*****************************************************************************************************************");
+        console.log("Request Object from Github OATH: ", req.url);
+        console.log("Request Object from Github OATH: ", req.url);
+        console.log("URL code from Github OATH: ", req.query.code);
+        let code = req.query.code;
+        let url = 'https://github.com/login/oauth/access_token';
+        let params = {
+            'client_id':client_id,
+            'client_secret': client_secret,
+            'code': code
+        }
+        console.log("Post request URL: ", url);
+        console.log("Post request parameters: ",params);
+        let headers = {
+            headers : {
+                'Accept': 'application/json'
+            }
+        }
+        axios({
+            method: 'post',
+            url: url,
+            params: params,
+            headers:headers.headers,
+        })
+        .then((response) => {
+            console.log("ACCESS TOKEN FOR USER: " + response.data['access_token'])
+            const access_token = response.data.access_token;
+            // res.redirect('/apps/profile/'+access_token)     // this redirects to profilepage with access token
+            if(req.session.user){
+                console.log("yse req is in session")
+                req.session.user_token = access_token;
+                res.redirect('/user')
+            } else {
+                
+                console.log("no req is not in session")
+                req.session.user_token = access_token;
+                res.redirect('/user')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    },
+    'user': function(req, res){
+        let headers ={
+            'Authorization' : `token ${req.session.user_token}`
+        }
+        axios({
+            method: 'get',
+            url: 'https://api.github.com/user',
+            headers: headers
+        })
+        .then( user => {
+            // create user in database
+            console.log("Creating a new user", user.data);
+
+            let newUser = new User();
+            newUser.full_name = user.data.name;
+            newUser.avatar_url = user.data.avatar_url;
+            newUser.access_token = req.session.user_token;
+            newUser.save()
+            .then(user=> {
+                console.log("Session ID of the current user logged in: ", req.session.user_id)
+                console.log("NewUser created: ", newUser);
+                var payload = { id: user.id };
+                var token = jwt.sign(payload, opts.secretOrKey, { expiresIn: 604800 });
+                req.session.user_id = newUser._id;
+                req.session.jwt_token = token;
+                console.log({ 
+                    "Message": "Successfully created a new Account", 
+                    "User": user, 
+                    "token": token  
+                });
+
+                // res.redirect(`/apps/profile/${newUser._id}`);   // redirect to reoute to create a user
+                res.redirect(`/apps/profile/${newUser._id}/${token}`);   // redirect to reoute to create a user
+            })
+            .catch(err=> console.log(err))
+        })
+        .catch( err => {
+            //something went wrong with get user data
+            console.log("Something went wrong with creating a new user", err)
+            res.redirect(`/apps/profile/${access_token}`);   // redirect to reoute to create a user
+        })
     }
 
 }

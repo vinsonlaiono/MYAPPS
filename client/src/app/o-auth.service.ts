@@ -9,16 +9,17 @@ import 'rxjs/add/observable/throw';
   providedIn: 'root'
 })
 export class OAuthService implements HttpInterceptor{
+
   constructor(
     private _http: HttpClient
   ) { }
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler) : Observable<HttpEvent<any>>{
+  
+  intercept(req: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>>{
 
     let jwt_token:string;
     jwt_token = req.url.split('/')[2]
     if (!req.url.includes(paths.error) || !paths.inSession) {
+      console.log("Not in path.errors")
       return next.handle(req);
     } 
     if(jwt_token === "undefined"){
@@ -40,8 +41,8 @@ export class OAuthService implements HttpInterceptor{
 
   authenticate(payLoad=null) {
     console.group()
-    console.log("Sending Authentication Request...")
-    return this._http.get('/secret/'+payLoad.jwt_token )
+    console.log("Sending Authentication Request...", localStorage.getItem('token_id'))
+    return this._http.get('/secret/'+localStorage.getItem("token_id") )
     .catch( err => {
       console.log("Catching error...")
       return Observable.throw(err);

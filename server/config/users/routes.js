@@ -10,7 +10,11 @@ const passport = require('passport');
 // -----------------------------------
 module.exports = function(app){
     app.get('/signin/github/oauth', (req, res) => {   // GITHUB Oauth
-      oauth.authenticate(req, res);
+      oauth.newAuthenticate(req, res);
+    })
+
+    app.get('/user', (req, res) => {
+      oauth.user(req, res);
     })
 
     app.get('/authenticate/user', (req, res) => {

@@ -29,10 +29,13 @@ export class MainComponent implements OnInit {
     console.log("User jwt: ", access[6])
     this.user_id = access[5];
     this.jwt_token = access[6];
+    paths.inSession = true;
     if(!paths.inSession){
       this.auth();
+    } else {
+      console.log("Not in session? ", paths)
     }
-    this.auth();
+
   }
 
   auth(){
@@ -40,15 +43,18 @@ export class MainComponent implements OnInit {
       'user_id' : this.user_id,
       'jwt_token' : this.jwt_token
     }
-    
+    console.log("Payload: ", payLoad)
+    console.log("Paths: ", paths)
     this.oAuth.authenticate(payLoad).subscribe( data => {
       console.group()
       console.log("data back from authentication:", data);
       this._route.navigate(['apps', 'profile', this.user_id, this.jwt_token]);
-
+      
     }, err => {
       console.log("there was an error while making API CALL");
       console.log(err);
+      this._route.navigate(['apps', 'profile', this.user_id, this.jwt_token]);
+
     });
   }
 
