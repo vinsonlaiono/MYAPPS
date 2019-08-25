@@ -34,5 +34,10 @@ export class JobsComponent implements OnInit {
 
   addToMyApps(myJob){
     console.log("Adding this job to my list of jobs", myJob)
+    this._httpSerivce.addJobToList(myJob).subscribe( data => {
+
+        console.log("Response back from server", data)
+
+    })
   }
 }

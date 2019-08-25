@@ -42,4 +42,8 @@ export class HttpService {
   newUser(user: Object, acc_token: String){
     return this._http.post(`/api/mon/users/${acc_token}`, user);
   }
+  addJobToList(job: Object){
+    console.log("Got job from component", job);
+    return this._http.post('http://localhost:8000/api/mon/jobs/users', {job:job});
+  }
 }

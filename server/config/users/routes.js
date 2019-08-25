@@ -45,6 +45,10 @@ module.exports = function(app){
     app.post('/api/mon/users/:acc_token', (req, res) => {
       MonUser.createNewUser(req, res);
     })
+    app.post('/api/mon/jobs/users', (req, res) => {
+      console.log("In routes of shizz", req.body.job)
+      MonUser.addJob(req, res);
+    })
     
     app.all("*", (req, res, next) => {
         res.sendFile(path.resolve("./client/dist/client/index.html"))

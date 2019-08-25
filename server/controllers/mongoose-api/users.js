@@ -32,14 +32,12 @@ module.exports = {
             res.json({"message": "Success", 'user':user})
         })
     },
-    'createNewUser' : function(req, res){               // Create a new user in the mongodb create session data
-
+    '   ' : function(req, res){               // Create a new user in the mongodb create session data
         if(req.session.user_id){
             console.log("Session exist")
         } else {
             console.log("need to create a user")
         }
-
         acc_token = req.params.acc_token;
         console.log(`Access_token: ${acc_token}`);        
         console.log(`Post data for user: ${req.body}`);        
@@ -47,6 +45,25 @@ module.exports = {
         res.json({
             'message': 'Creating a new user:'
         })
-        
+    },
+    'addJob': function(req, res) {
+        console.log("SESSION DATA FOR JOBS: "+ req.session.user_id)
+        // if(req.session.user_id){
+            User.findById(req.session.user_id, (err, user) => {
+                if(err){
+                    res.json({'message':"error", 'err': err})
+                } else {
+                    console.log("found user", user)
+                    console.log("found job", req.body.job)
+                    let job = req.body.job
+                    let jobid = req.body.job.id
+
+                    user.jobs.push({jobid: job})
+                    user.save();
+
+                    res.json({'message':"success", 'user': user})
+                }
+            })
+        // }
     }
 }

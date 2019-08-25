@@ -18,8 +18,9 @@ export class OAuthService implements HttpInterceptor{
 
     let jwt_token:string;
     jwt_token = req.url.split('/')[2]
-    if (!req.url.includes(paths.error) || !paths.inSession) {
+    if (!req.url.includes(paths.error)) {
       console.log("Not in path.errors")
+      console.log(req)
       return next.handle(req);
     } 
     if(jwt_token === "undefined"){
